@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  
+  <!-- Primary SEO Metadata -->
+  <title>Neon Rush – Free Cyberpunk Endless Runner Game</title>
+  <meta name="description" content="Play Neon Rush, a free neon cyberpunk endless runner. Dodge obstacles, jump, slide, collect glowing coins, and beat your high score in this fast-paced browser game.">
+  <meta name="keywords" content="Neon Rush, cyberpunk game, endless runner, free browser game, 3D runner, HTML5 canvas game">
+  <meta name="theme-color" content="#060312">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="alternate icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Canonical URL Configuration Point: Update 'https://example.com' to your live production domain -->
+  <link rel="canonical" href="https://example.com/neon-rush/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/neon-rush/">
+  <meta property="og:title" content="Neon Rush – Free Cyberpunk Endless Runner Game">
+  <meta property="og:description" content="Play Neon Rush, a free neon cyberpunk endless runner. Dodge obstacles, jump, slide, collect glowing coins, and beat your high score in this fast-paced browser game.">
+  <meta property="og:image" content="assets/og-preview.svg">
+  <meta property="og:image:alt" content="Neon Rush - Cyberpunk 3D Endless Runner Scene">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neon Rush – Free Cyberpunk Endless Runner Game">
+  <meta name="twitter:description" content="Play Neon Rush, a free neon cyberpunk endless runner. Dodge obstacles, jump, slide, collect glowing coins, and beat your high score in this fast-paced browser game.">
+  <meta name="twitter:image" content="assets/og-preview.svg">
+
+  <!-- Google Fonts: Orbitron & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Structured Data: Schema.org VideoGame (AdSense & Search Compliant) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Neon Rush",
+    "description": "A high-octane 3D cyberpunk endless runner browser game featuring dynamic jump physics, multi-lane lane dodging, sliding under plasma gates, and collecting glowing cyber tokens.",
+    "genre": ["Action", "Arcade", "Endless Runner"],
+    "playMode": "SinglePlayer",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any (Modern Web Browser)",
+    "inLanguage": "en",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="page-wrapper">
+    <!-- Active Game Screen Container (Full Viewport Arcade Experience) -->
+    <main id="game-container" role="region" aria-label="Neon Rush Interactive Game Screen">
+      <!-- HTML5 Canvas Viewport -->
+      <canvas id="game-canvas" width="800" height="600" aria-label="Neon Rush Game Canvas"></canvas>
+
+      <!-- 1. MAIN MENU SCREEN -->
+      <div id="screen-menu" class="screen-overlay active">
+        <div class="cyber-card">
+          <h1 class="title-glow">Neon Rush</h1>
+          <p class="tagline">Cyberpunk Endless Runner</p>
+
+          <div class="stats-banner">
+            <div class="stat-item">
+              <span class="stat-label">Best Record</span>
+              <span id="menu-best-score" class="stat-val">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Coins</span>
+              <span id="menu-total-coins" class="stat-val">0</span>
+            </div>
+          </div>
+
+          <div class="controls-guide">
+            <div class="guide-row">
+              <span>Switch Lanes</span>
+              <span><span class="key-badge">A</span> <span class="key-badge">D</span> / <span class="key-badge">←</span> <span class="key-badge">→</span> / Swipe</span>
+            </div>
+            <div class="guide-row">
+              <span>Jump Over Hurdles</span>
+              <span><span class="key-badge">W</span> / <span class="key-badge">↑</span> <span class="key-badge">Space</span> / Swipe Up</span>
+            </div>
+            <div class="guide-row">
+              <span>Slide Under Beams</span>
+              <span><span class="key-badge">S</span> / <span class="key-badge">↓</span> / Swipe Down</span>
+            </div>
+            <div class="guide-row">
+              <span>Pause Game</span>
+              <span><span class="key-badge">Esc</span> or <span class="key-badge">P</span></span>
+            </div>
+          </div>
+
+          <button id="btn-play" class="btn-cyber-primary" type="button" aria-label="Start Game">
+            <span>RUN SYSTEM</span>
+            <span>▶</span>
+          </button>
+
+          <div class="menu-actions">
+            <button id="btn-settings" class="btn-cyber-secondary" type="button" aria-label="Open Settings">Settings ⚙️</button>
+            <button id="btn-open-tests" class="btn-cyber-secondary" type="button" aria-label="Run Diagnostic Tests">Diagnostics 🧪</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. IN-GAME HUD -->
+      <div id="screen-hud" class="screen-overlay">
+        <header class="hud-top-bar">
+          <div class="hud-group">
+            <div class="hud-metric">
+              <span class="hud-metric-label">Score</span>
+              <span id="hud-score" class="hud-metric-value score">0</span>
+            </div>
+            <div class="hud-metric">
+              <span class="hud-metric-label">Distance</span>
+              <span id="hud-distance" class="hud-metric-value">0m</span>
+            </div>
+            <div class="hud-metric">
+              <span class="hud-metric-label">Coins</span>
+              <span id="hud-coins" class="hud-metric-value coins">0</span>
+            </div>
+            <div class="hud-metric">
+              <span class="hud-metric-label">Speed</span>
+              <span id="hud-speed" class="hud-metric-value speed">86 km/h</span>
+            </div>
+            <div id="hud-multiplier" class="multiplier-badge">2X</div>
+          </div>
+
+          <div class="hud-controls-group">
+            <button id="btn-hud-mute" class="btn-hud-icon" type="button" aria-label="Mute Audio">🔊</button>
+            <button id="btn-hud-pause" class="btn-hud-icon" type="button" aria-label="Pause Game">⏸</button>
+          </div>
+        </header>
+
+        <div id="hud-powerups" class="hud-powerups-container"></div>
+      </div>
+
+      <!-- 3. PAUSE SCREEN -->
+      <div id="screen-pause" class="screen-overlay">
+        <div class="cyber-card">
+          <h2 class="overlay-title">SYSTEM PAUSED</h2>
+          <div class="overlay-btn-stack">
+            <button id="btn-resume" class="btn-cyber-primary" type="button" aria-label="Resume Game">Resume ▶</button>
+            <button id="btn-restart-pause" class="btn-cyber-secondary" type="button" aria-label="Restart Run">Restart Run ↺</button>
+            <button id="btn-mute-pause" class="btn-cyber-secondary" type="button" aria-label="Toggle Sound">Mute Audio 🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. GAME OVER SCREEN -->
+      <div id="screen-gameover" class="screen-overlay">
+        <div class="cyber-card">
+          <h2 class="overlay-title gameover">SYSTEM OVERRIDE</h2>
+          <div id="go-new-record" class="new-record-banner">★ NEW RECORD ★</div>
+
+          <div class="game-results">
+            <div class="result-item">
+              <span class="result-label">Final Score</span>
+              <span id="go-score" class="result-val highlight">0</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Best Score</span>
+              <span id="go-best" class="result-val">0</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Distance</span>
+              <span id="go-distance" class="result-val">0m</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">Coins Collected</span>
+              <span id="go-coins" class="result-val">0</span>
+            </div>
+          </div>
+
+          <div class="overlay-btn-stack">
+            <button id="btn-play-again" class="btn-cyber-primary" type="button" aria-label="Play Again">
+              <span>RESTART RUN</span>
+              <span>↺</span>
+            </button>
+            <button id="btn-go-menu" class="btn-cyber-secondary" type="button" aria-label="Return to Main Menu">Main Menu</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. MOBILE ON-SCREEN VIRTUAL CONTROLS -->
+      <div id="virtual-controls">
+        <div class="v-pad-group">
+          <button id="btn-touch-left" class="btn-vtouch" type="button" aria-label="Move Left">◀</button>
+          <button id="btn-touch-right" class="btn-vtouch" type="button" aria-label="Move Right">▶</button>
+        </div>
+        <div class="v-pad-group">
+          <button id="btn-touch-jump" class="btn-vtouch action" type="button" aria-label="Jump">▲</button>
+          <button id="btn-touch-slide" class="btn-vtouch action" type="button" aria-label="Slide">▼</button>
+        </div>
+      </div>
+
+      <!-- 6. SETTINGS MODAL -->
+      <div id="modal-settings" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="settings-heading">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h2 id="settings-heading">Game Configuration</h2>
+            <button id="btn-close-settings" class="btn-close-modal" type="button" aria-label="Close Settings">✕</button>
+          </div>
+
+          <div class="setting-row">
+            <label for="setting-mute">Mute All Audio</label>
+            <input type="checkbox" id="setting-mute">
+          </div>
+
+          <div class="setting-row">
+            <label for="setting-sfx">Sound Effects Volume</label>
+            <input type="range" id="setting-sfx" min="0" max="1" step="0.05">
+          </div>
+
+          <div class="setting-row">
+            <label for="setting-music">Synthwave Music Volume</label>
+            <input type="range" id="setting-music" min="0" max="1" step="0.05">
+          </div>
+
+          <div class="setting-row">
+            <label for="setting-reduced-motion">Reduced Motion</label>
+            <input type="checkbox" id="setting-reduced-motion">
+          </div>
+
+          <div class="setting-row">
+            <label for="setting-touch-controls">Always Show Touch Controls</label>
+            <input type="checkbox" id="setting-touch-controls">
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. IN-BROWSER DIAGNOSTIC TESTS MODAL -->
+      <div id="modal-tests" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="tests-heading">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h2 id="tests-heading">Automated Test Suite</h2>
+            <button id="btn-close-tests" class="btn-close-modal" type="button" aria-label="Close Diagnostics">✕</button>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem;">
+            Execute deterministic physics, jump trajectory, coin collection, and collision tests:
+          </p>
+          <button id="btn-run-tests" class="btn-cyber-primary" style="font-size: 0.95rem; padding: 0.7rem;" type="button">EXECUTE TEST SUITE ⚡</button>
+          <div id="tests-output" style="display: none;"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Crawlable Page Content for Search Engines & Players (Positioned Safely Below the Arcade Screen) -->
+    <article class="content-section" id="game-guide">
+      <div class="content-container">
+        <!-- Google AdSense Ready Reserved Container (Strictly Outside Active Gameplay) -->
+        <aside class="ad-slot-container" aria-label="Advertisement placeholder">
+          <div class="ad-banner-placeholder">
+            <span class="ad-badge">SPONSORED / ADVERTISEMENT PLACEHOLDER</span>
+            <p class="ad-note">Reserved slot for future responsive Google AdSense banner (300x250 / 728x90). Separated from gameplay controls in compliance with Google AdSense gaming policies.</p>
+          </div>
+        </aside>
+
+        <header class="guide-header">
+          <h2>About Neon Rush</h2>
+          <p class="guide-lead">
+            <strong>Neon Rush</strong> is a high-octane 3D endless runner set on a glowing highway slicing through an electric cyberpunk metropolis. Built from the ground up using modern HTML5 Canvas, Vanilla JavaScript, and the Web Audio API, Neon Rush delivers authentic arcade gameplay with zero external heavy dependencies.
+          </p>
+        </header>
+
+        <section class="guide-block">
+          <h3>How to Play Neon Rush</h3>
+          <p>
+            You control an advanced cyber-runner moving at breakneck speed along a three-lane futuristic highway. Your objective is to survive as long as possible, achieve the highest distance score, and gather glowing cyber tokens and power-ups:
+          </p>
+          <ul class="guide-list">
+            <li><strong>Dodge Road Hazards:</strong> Switch rapidly between the left, center, and right lanes to bypass impenetrable tall cyber walls.</li>
+            <li><strong>Leap Over Hurdles:</strong> Jump over low laser barricades to clear them safely and collect airborne parabolic coin trails.</li>
+            <li><strong>Duck Beneath High Beams:</strong> Slide into a low-profile hover dash to glide safely underneath high-voltage overhead plasma gates.</li>
+            <li><strong>Collect Power-Ups:</strong> Grab energy shields to absorb fatal collisions, magnetic converters to draw nearby coins directly to you, and 2X score multipliers to maximize your run.</li>
+          </ul>
+        </section>
+
+        <section class="guide-block">
+          <h3>Controls Reference</h3>
+          <div class="controls-grid">
+            <div class="control-card">
+              <h4>Desktop Keyboard</h4>
+              <ul>
+                <li><kbd>A</kbd> / <kbd>D</kbd> or <kbd>←</kbd> / <kbd>→</kbd> : Change Lanes</li>
+                <li><kbd>W</kbd> / <kbd>↑</kbd> or <kbd>Space</kbd> : Jump</li>
+                <li><kbd>S</kbd> / <kbd>↓</kbd> : Slide &amp; Fast-Fall Slam Dive</li>
+                <li><kbd>P</kbd> or <kbd>Esc</kbd> : Pause / Resume</li>
+              </ul>
+            </div>
+            <div class="control-card">
+              <h4>Mobile &amp; Touch Gestures</h4>
+              <ul>
+                <li><strong>Swipe Left / Right:</strong> Shift between lanes</li>
+                <li><strong>Swipe Up:</strong> Jump over hurdles and grab jump coins</li>
+                <li><strong>Swipe Down:</strong> Slide beneath overhead beams</li>
+                <li><strong>Virtual D-Pad:</strong> On-screen directional buttons enabled automatically or toggled in Settings</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="guide-block">
+          <h3>Pro Tips for High Scores</h3>
+          <ol class="guide-list">
+            <li><strong>Master the Fast-Fall:</strong> If you are airborne from a jump and spot an overhead laser beam immediately ahead, swipe or press <kbd>Down</kbd> to execute a fast-fall dive directly into a slide.</li>
+            <li><strong>Follow Coin Jump Arcs:</strong> Parabolic coin formations are tailored to the exact trajectory of your jump. Jumping at the start of an arc guarantees you collect every coin in the curve.</li>
+            <li><strong>Listen to Audio Cues:</strong> Distinct procedural sound sweeps notify you of coin collection, shield activation, and obstacle proximity even when focusing your eyes on the horizon.</li>
+          </ol>
+        </section>
+
+        <section class="guide-block">
+          <h3>Frequently Asked Questions (FAQ)</h3>
+          <dl class="faq-list">
+            <dt>Is Neon Rush free to play?</dt>
+            <dd>Yes, Neon Rush is 100% free to play directly in any modern desktop or mobile browser without downloads, installs, or paid upgrades.</dd>
+            <dt>How does Neon Rush save my high score?</dt>
+            <dd>Your best score, total collected coins, and audio preferences are securely saved locally to your device via browser LocalStorage.</dd>
+            <dt>Can I play offline?</dt>
+            <dd>Yes, all visuals, procedural audio, and game physics are self-contained with zero external CDN dependencies, allowing the game to run seamlessly without an active internet connection once loaded.</dd>
+          </dl>
+        </section>
+
+        <footer class="content-footer">
+          <p><a href="../index.html" class="portal-link">← Return to Main Gaming Portal</a></p>
+          <p class="copyright">&copy; 2026 Neon Rush Arcade. Original procedural canvas art, audio, and gameplay.</p>
+        </footer>
+      </div>
+    </article>
+  </div>
+
+  <!-- Entry Script -->
+  <script type="module" src="src/main.js"></script>
+
+  <!-- In-browser Test Runner Integration -->
+  <script type="module">
+    import { runAllTests } from './tests/game-tests.js';
+
+    const modalTests = document.getElementById('modal-tests');
+    const btnCloseTests = document.getElementById('btn-close-tests');
+    const btnRunTests = document.getElementById('btn-run-tests');
+    const outputEl = document.getElementById('tests-output');
+
+    if (btnCloseTests) {
+      btnCloseTests.addEventListener('click', () => {
+        modalTests.classList.remove('active');
+      });
+    }
+
+    if (btnRunTests && outputEl) {
+      btnRunTests.addEventListener('click', async () => {
+        outputEl.style.display = 'block';
+        outputEl.textContent = 'Running test suite...\n';
+        const results = await runAllTests();
+        outputEl.textContent = results.log;
+        if (results.allPassed) {
+          outputEl.style.color = '#00f3ff';
+        } else {
+          outputEl.style.color = '#ff007f';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

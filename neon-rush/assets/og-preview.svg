@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#060314"/>
+      <stop offset="45%" stop-color="#12072b"/>
+      <stop offset="80%" stop-color="#2e0a45"/>
+      <stop offset="100%" stop-color="#ff007f"/>
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe600"/>
+      <stop offset="60%" stop-color="#ff007f"/>
+      <stop offset="100%" stop-color="#9d00ff"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#00f3ff"/>
+      <stop offset="100%" stop-color="#ff007f"/>
+    </linearGradient>
+    <filter id="neonGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Sky -->
+  <rect width="1200" height="300" fill="url(#skyGrad)"/>
+
+  <!-- Horizon Sun -->
+  <circle cx="600" cy="280" r="140" fill="url(#sunGrad)" filter="url(#neonGlow)"/>
+  <!-- Sun Scanlines -->
+  <line x1="460" y1="280" x2="740" y2="280" stroke="#060314" stroke-width="5"/>
+  <line x1="475" y1="305" x2="725" y2="305" stroke="#060314" stroke-width="6"/>
+  <line x1="500" y1="330" x2="700" y2="330" stroke="#060314" stroke-width="8"/>
+
+  <!-- Distant City Skyline Silhouettes -->
+  <rect x="100" y="160" width="60" height="140" fill="#0c071d" stroke="#00f3ff" stroke-width="1.5"/>
+  <rect x="180" y="120" width="70" height="180" fill="#120b2d" stroke="#ff007f" stroke-width="1.5"/>
+  <rect x="270" y="190" width="50" height="110" fill="#0a0a20" stroke="#9d00ff" stroke-width="1.5"/>
+  <rect x="880" y="180" width="55" height="120" fill="#0a0a20" stroke="#9d00ff" stroke-width="1.5"/>
+  <rect x="950" y="130" width="75" height="170" fill="#120b2d" stroke="#00f3ff" stroke-width="1.5"/>
+  <rect x="1040" y="160" width="60" height="140" fill="#0c071d" stroke="#ff007f" stroke-width="1.5"/>
+
+  <!-- Ground Cyber Grid -->
+  <rect x="0" y="300" width="1200" height="330" fill="#080318"/>
+  <path d="M 0 300 L 0 630 L 1200 630 L 1200 300 Z" fill="#080318"/>
+
+  <!-- Perspective Highway -->
+  <polygon points="560,300 640,300 1100,630 100,630" fill="#0e0926" stroke="#00f3ff" stroke-width="3"/>
+  <line x1="560" y1="300" x2="100" y2="630" stroke="#00f3ff" stroke-width="6" filter="url(#neonGlow)"/>
+  <line x1="640" y1="300" x2="1100" y2="630" stroke="#ff007f" stroke-width="6" filter="url(#neonGlow)"/>
+
+  <!-- Center Dashed Line -->
+  <line x1="600" y1="300" x2="600" y2="630" stroke="#00f3ff" stroke-width="4" stroke-dasharray="25,20"/>
+
+  <!-- Branding Title -->
+  <text x="600" y="100" font-family="'Orbitron', sans-serif, system-ui" font-size="76" font-weight="900" fill="url(#titleGrad)" text-anchor="middle" letter-spacing="8" filter="url(#neonGlow)">NEON RUSH</text>
+  <text x="600" y="145" font-family="'Inter', sans-serif, system-ui" font-size="24" font-weight="700" fill="#00f3ff" text-anchor="middle" letter-spacing="6">CYBERPUNK ENDLESS RUNNER</text>
+</svg>
